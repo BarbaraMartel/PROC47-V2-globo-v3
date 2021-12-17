@@ -9,7 +9,7 @@ var restart, restartImg
 
 var score = 0;
 
-//game states      
+// Estados del juego      
 var PLAY = 1;
 var END = 0;
 var gameState = PLAY;
@@ -34,31 +34,31 @@ restartImg = loadImage("assets/restart.png")
 function setup(){
 
   createCanvas(400,400)
-//background image
+// Imagen de fondo
 bg = createSprite(165,485,1,1);
 bg.addImage(bgImg);
 bg.scale = 1.3
 
 
-//creating top and bottom grounds
+// Creando los terrenos inferior y superior
 bottomGround = createSprite(200,390,800,20);
 bottomGround.visible = false;
 
 topGround = createSprite(200,10,800,20);
 topGround.visible = false;
       
-//creating balloon     
+// Creando el globo
 balloon = createSprite(100,200,20,50);
 balloon.addAnimation("balloon",balloonImg);
 balloon.scale = 0.2;
 balloon.debug = true;
 
-//initialising groups
+// Inicializando los grupos
 topObstaclesGroup = new Group();
 bottomObstaclesGroup = new Group();
 barGroup = new Group();
 
-//creating game over and restart sprites
+// Creando los sprites de fin del juego y reiniciar
 gameOver = createSprite(220,200);
 restart = createSprite(220,240);
 gameOver.addImage(gameOverImg);
@@ -77,19 +77,19 @@ function draw() {
 
   if(gameState === PLAY){
 
-    //making the hot air balloon jump
+    // Hacer que el globo aerostático salte
     if(keyDown("space")) {
       balloon.velocityY = -6 ;
       
     }
 
-    //adding gravity
+    // Agregando gravedad
      balloon.velocityY = balloon.velocityY + 2;
 
      
     Bar();
 
-    //spawning top and bottom obstacles
+    // Generando obstáculos inferiores y superiores
     spawnObstaclesTop();
     spawnObstaclesBottom();
 
@@ -109,20 +109,20 @@ gameState = END;
           restart.visible = true;
           restart.depth = restart.depth+1
           
-          //all sprites should stop moving in the END state
+          // Todos los sprite deben detenerse en el estado END
           balloon.velocityX = 0;
           balloon.velocityY = 0;
           topObstaclesGroup.setVelocityXEach(0);
           bottomObstaclesGroup.setVelocityXEach(0);
           barGroup.setVelocityXEach(0);
   
-          //setting -1 lifetime so that obstacles don't disappear in the END state
+          // Configurando lifetime en -1 para que los obstáculos no desaparezcan en el estado END
           topObstaclesGroup.setLifetimeEach(-1);
           bottomObstaclesGroup.setLifetimeEach(-1);
          
           balloon.y = 200;
           
-          //resetting the game
+          // Reiniciando el juego
           if(mousePressedOver(restart)) 
           {
                 reset();
@@ -156,10 +156,10 @@ function spawnObstaclesTop()
 obstacleTop.scale = 0.1;
 obstacleTop.velocityX = -4;
 
-//random y positions for top obstacles
+// Posiciones "y" aleatorias para los obstaculos superiores
 obstacleTop.y = Math.round(random(10,100));
 
-//generate random top obstacles
+// Generando obstáculos superiores aleatorios 
 var rand = Math.round(random(1,2));
 switch(rand) {
   case 1: obstacleTop.addImage(obsTop1);
@@ -169,7 +169,7 @@ switch(rand) {
   default: break;
 }
 
- //assign lifetime to the variable
+ // Asignando lifetime a la variables 
 obstacleTop.lifetime = 100;
 
 balloon.depth = balloon.depth + 1;
@@ -193,7 +193,7 @@ function spawnObstaclesBottom()
     
     
 
-   //generate random bottom obstacles
+   // Generar obstáculos inferiores aleatorios 
     var rand = Math.round(random(1,3));
     switch(rand) {
       case 1: obstacleBottom.addImage(obsBottom1);
@@ -205,7 +205,7 @@ function spawnObstaclesBottom()
       default: break;
     }
 
-     //assign lifetime to the variable
+     // Asignar lifetime a la variable
    obstacleBottom.lifetime = 100;
     
    balloon.depth = balloon.depth + 1;
@@ -241,7 +241,7 @@ function Score()
         textFont("algerian");
         textSize(30);
         fill("yellow");
-        text("Score: "+ score, 250, 50);
+        text("Puntuación : "+ score, 150, 50);
        
   
 }
