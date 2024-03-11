@@ -9,10 +9,8 @@ var restart, restartImg
 
 var score = 0;
 
-// Estados del juego      
-var PLAY = 1;
-var END = 0;
-var gameState = PLAY;
+// Variables de estados del juego      
+
 
 function preload(){
 bgImg = loadImage("assets/bg.png")
@@ -26,8 +24,7 @@ obsBottom1 = loadImage("assets/obsBottom1.png")
 obsBottom2 = loadImage("assets/obsBottom2.png")
 obsBottom3 = loadImage("assets/obsBottom3.png")
 
-gameOverImg= loadImage("assets/gameOver.png")
-restartImg = loadImage("assets/restart.png")
+//Cargar imágenes restart y gameOver
 
 }
 
@@ -59,14 +56,7 @@ bottomObstaclesGroup = new Group();
 barGroup = new Group();
 
 // Creando los sprites de fin del juego y reiniciar
-gameOver = createSprite(220,200);
-restart = createSprite(220,240);
-gameOver.addImage(gameOverImg);
-gameOver.scale = 0.5;
-restart.addImage(restartImg);
-restart.scale = 0.5;
-gameOver.visible = false;
-restart.visible = false;
+
 }
 
 function draw() {
@@ -74,7 +64,7 @@ function draw() {
   background("black");
 
   
-
+//Estado PLAY
   if(gameState === PLAY){
 
     // Hacer que el globo aerostático salte
@@ -93,40 +83,27 @@ function draw() {
     spawnObstaclesTop();
     spawnObstaclesBottom();
 
-//condition for END state
-if(topObstaclesGroup.isTouching(balloon) || balloon.isTouching(topGround)
-|| balloon.isTouching(bottomGround) || bottomObstaclesGroup.isTouching(balloon)){
+//condición para el estado END
 
-gameState = END;
-
-}
   }
 
+  //Estado END
   if(gameState === END) 
     {
-          gameOver.visible = true;
-          gameOver.depth = gameOver.depth+1
-          restart.visible = true;
-          restart.depth = restart.depth+1
+      
+      //restart y gameOver visibles
+
           
           // Todos los sprite deben detenerse en el estado END
-          balloon.velocityX = 0;
-          balloon.velocityY = 0;
-          topObstaclesGroup.setVelocityXEach(0);
-          bottomObstaclesGroup.setVelocityXEach(0);
-          barGroup.setVelocityXEach(0);
+
   
           // Configurando lifetime en -1 para que los obstáculos no desaparezcan en el estado END
-          topObstaclesGroup.setLifetimeEach(-1);
-          bottomObstaclesGroup.setLifetimeEach(-1);
+
          
           balloon.y = 200;
           
           // Reiniciando el juego
-          if(mousePressedOver(restart)) 
-          {
-                reset();
-          }
+
 
     } 
 
@@ -136,13 +113,7 @@ gameState = END;
 
 function reset()
 {
-  gameState = PLAY;
-  gameOver.visible = false;
-  restart.visible = false;
-  topObstaclesGroup.destroyEach();
-  bottomObstaclesGroup.destroyEach();
 
-  score=0;
 }
 
 
